@@ -11,3 +11,110 @@
 
   </div>
 </header>
+
+<!-- BEGIN_MODULE Admin_Config -->
+<!-- BEGIN_IF [{notice_mess}/nem/] -->
+<div class="acms-admin-alert acms-admin-alert-icon acms-admin-alert-info">
+  <span class="acms-admin-alert-icon-before acms-admin-icon-news"></span>
+  <button
+    type="button"
+    class="js-acms-alert-close acms-admin-alert-icon-after"
+    aria-label="アラートを閉じる"
+  >
+    ×
+  </button>
+  <!--T-->API Preview 設定を保存しました<!--/T-->
+</div>
+<!-- END_IF -->
+<!-- BEGIN msg#error -->
+<div class="acms-admin-alert acms-admin-alert-icon acms-admin-alert-danger">
+  <span class="acms-admin-alert-icon-before acms-admin-icon-attention"></span>
+  <button
+    type="button"
+    class="js-acms-alert-close acms-admin-alert-icon-after"
+    aria-label="アラートを閉じる"
+  >
+    ×
+  </button>
+  <!--T-->コンフィグを保存出来ませんでした。<!--/T-->
+</div>
+<!-- END msg#error -->
+
+<form action="" method="post" class="acms-admin-form">
+  <div class="js-acms_fix_marker acms_fix_bg">
+    <div class="acms_fix_bg_index">
+      <button
+        type="submit"
+        name="ACMS_POST_Config"
+        class="acms-admin-btn-admin acms-admin-btn-admin-primary acms-admin-btn-admin-save js-saving-splash"
+      >
+        <!--T-->保存<!--/T-->
+      </button>
+    </div>
+  </div>
+
+  <h3 class="acms-admin-admin-title2 "><!--T-->設定<!--/T--></h3>
+  <table class="adminTable acms-admin-table-admin-edit">
+    <tr>
+      <th>
+        <!--T-->APIプレビュー有効化<!--/T-->
+        <i
+          class="acms-admin-icon-tooltip js-acms-tooltip-hover"
+          data-acms-tooltip="<!--T-->APIプレビュー機能を有効化するかどうかを設定します。<!--/T-->"
+        ></i>
+      </th>
+      <td>
+        <input type="hidden" name="api_preview_enable" value="off"/>
+        <div class="acms-admin-form-checkbox">
+          <input type="checkbox" name="api_preview_enable" value="on" {api_preview_enable:checked#on} id="input-checkbox-api_preview_enable"/>
+          <label for="input-checkbox-api_preview_enable"><i class="acms-admin-ico-checkbox"></i><!--T-->APIプレビューを利用する<!--/T-->
+          </label>
+        </div>
+        <input type="hidden" name="config[]" value="api_preview_enable"/>
+      </td>
+    </tr>
+    <tr>
+      <th>
+        Preview Key
+        <i
+          class="acms-admin-icon-tooltip js-acms-tooltip-hover"
+          data-acms-tooltip="<!--T-->APIへのリクエストのヘッダーに設定します。<!--/T-->"
+        ></i>
+      </th>
+      <td class="js-x-api-key">
+        <input type="text" size="20" name="api_preview_preview_key" value="{api_preview_preview_key}" class="js-key-input acms-admin-form-width-half" readonly/>
+        <input type="hidden" name="config[]" value="api_preview_preview_key"/>
+        <button type="button" class="js-update-key acms-admin-btn-admin">
+          プレビューキーを再生成
+          <i class="acms-admin-icon-publish"></i>
+        </button>
+        <p class="acms-admin-text-info acms-admin-margin-top-mini">
+          APIプレビューの際に必要なキーです。URLに含めて送信してください。
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <th>
+        プレビューURL
+        <i
+          class="acms-admin-icon-tooltip js-acms-tooltip-hover"
+          data-acms-tooltip="プレビューボタンをクリックした際の遷移先URLを指定することができます。"
+        ></i>
+      </th>
+      <td>
+        <input
+          class="acms-admin-form-width-full"
+          type="text"
+          name="api_preview_preview_url"
+          value="{api_preview_preview_url}"
+          placeholder="https://example.com/api/draft/?previewKey=%\{PREVIEW_KEY\}&code=%\{ECD\}"
+        >
+        <input type="hidden" name="config[]" value="api_preview_preview_url">
+        <p class="acms-admin-text-info acms-admin-margin-top-mini">
+          URLにはグローバル変数を利用できます。
+        </p>
+      </td>
+    </tr>
+  </table>
+</form>
+<!-- END_MODULE Admin_Config -->

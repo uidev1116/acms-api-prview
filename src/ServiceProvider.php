@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Acms\Plugins\ApiPreview;
 
 use ACMS_App;
 use Acms\Services\Facades\Application as Container;
 use Acms\Services\Common\InjectTemplate;
+use Acms\Services\Common\HookFactory;
 
 class ServiceProvider extends ACMS_App
 {
@@ -38,15 +41,34 @@ class ServiceProvider extends ACMS_App
      */
     public $desc = 'a-blog cms をヘッドレスCMSとして利用する場合にプレビュー機能を実装するための拡張アプリです。';
 
+    public function __construct()
+    {
+        /** @var \Acms\Services\Container */
+        $container = Container::getInstance();
+
+        /**
+         * Register Service
+         */
+        $container->singleton(
+            'api-preview.service.config',
+            Services\Config\Helper::class
+        );
+        $container->singleton(
+            'api-preview.service.preview',
+            Services\Preview\PreviewService::class
+        );
+    }
+
     /**
      * サービスの初期処理
      */
     public function init()
     {
         /**
-         * Register Service
+         * Attach Hook
          */
-        Container::singleton('api', Services\Api\Engine::class);
+        $hook = HookFactory::singleton();
+        $hook->attach('api-preview.hook', new Hook());
 
         /**
          * Inject Template
@@ -55,6 +77,9 @@ class ServiceProvider extends ACMS_App
         if (ADMIN === 'app_' . $this->menu) {
             $inject->add('admin-topicpath', PLUGIN_DIR . $this->name . '/template/admin/topicpath.html');
             $inject->add('admin-main', PLUGIN_DIR . $this->name . '/template/admin/main.html');
+        }
+        if (ADMIN === 'entry_editor') {
+            $inject->add('admin-entry-editor-top', PLUGIN_DIR . $this->name . '/template/admin/entry/editor/top.html');
         }
     }
 
