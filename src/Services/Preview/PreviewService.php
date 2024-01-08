@@ -17,23 +17,70 @@ class PreviewService
 
     protected Previewkey $previewKey;
 
+    protected \Field $getParameter;
+
+    protected \Field $queryParameter;
+
     public function __construct()
     {
+        $this->getParameter = App::getGetParameter();
+        $this->queryParameter = App::getQueryParameter();
         $this->config = App::make('api-preview.service.config');
         $this->previewKey = new Previewkey($this->config->get('api_preview_preview_key', ''));
     }
 
-    public function verifyPreviewKey(Previewkey $previewkey): bool
+    public function processPreview()
+    {
+        \AcmsLogger::debug('ApiPreview拡張アプリ: ' . 'processPreview()');
+        if ($this->shouldVerifyPreviewKey() === false) {
+            \AcmsLogger::debug('ApiPreview拡張アプリ: ' . 'shouldVerifyPreviewKey() === false');
+            return;
+        }
+
+        $previewKey = new Previewkey($this->getParameter->get('previewKey', ''));
+
+        if ($this->verifyPreviewKey($previewKey) === true) {
+            \AcmsLogger::debug('ApiPreview拡張アプリ: ' . 'verifyPreviewKey() === true');
+            $this->enablePreviewMode();
+        }
+    }
+
+    protected function shouldVerifyPreviewKey(): bool
+    {
+        if (config('api_enable') !== 'on') {
+            return false;
+        }
+
+        \AcmsLogger::debug('ApiPreview拡張アプリ: ' . 'api_enable === on');
+
+        if (empty($this->queryParameter->get('api'))) {
+            return false;
+        }
+
+        \AcmsLogger::debug('ApiPreview拡張アプリ: ' . 'empty(api) === false');
+
+        if ($this->isEnable() === false) {
+            return false;
+        }
+
+        if ($this->getParameter->isExists('previewKey') === false) {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function verifyPreviewKey(Previewkey $previewkey): bool
     {
         return $this->previewKey->equals($previewkey);
     }
 
-    public function isEnable()
+    protected function isEnable()
     {
         return $this->config->get('api_preview_enable', 'off') === 'on';
     }
 
-    public function enablePreviewMode()
+    protected function enablePreviewMode()
     {
         if (defined('ACMS_SID') === false) {
             define('ACMS_SID', 1);
