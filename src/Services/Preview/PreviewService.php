@@ -31,16 +31,13 @@ class PreviewService
 
     public function processPreview()
     {
-        \AcmsLogger::debug('ApiPreview拡張アプリ: ' . 'processPreview()');
         if ($this->shouldVerifyPreviewKey() === false) {
-            \AcmsLogger::debug('ApiPreview拡張アプリ: ' . 'shouldVerifyPreviewKey() === false');
             return;
         }
 
         $previewKey = new Previewkey($this->getParameter->get('previewKey', ''));
 
         if ($this->verifyPreviewKey($previewKey) === true) {
-            \AcmsLogger::debug('ApiPreview拡張アプリ: ' . 'verifyPreviewKey() === true');
             $this->enablePreviewMode();
         }
     }
@@ -51,13 +48,9 @@ class PreviewService
             return false;
         }
 
-        \AcmsLogger::debug('ApiPreview拡張アプリ: ' . 'api_enable === on');
-
         if (empty($this->queryParameter->get('api'))) {
             return false;
         }
-
-        \AcmsLogger::debug('ApiPreview拡張アプリ: ' . 'empty(api) === false');
 
         if ($this->isEnable() === false) {
             return false;
