@@ -68,7 +68,7 @@ class PreviewService
         return $this->previewKey->equals($previewkey);
     }
 
-    protected function isEnable()
+    public function isEnable()
     {
         return $this->config->get('api_preview_enable', 'off') === 'on';
     }
