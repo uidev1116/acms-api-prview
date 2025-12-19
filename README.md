@@ -4,8 +4,8 @@ a-blog cms をヘッドレスCMSとして利用する場合にプレビュー機
 
 ## 動作環境
 
-- a-blog cms: >= Ver.3.0.0
-- php: >= 8.0
+- a-blog cms: >= Ver.3.2.0
+- php: >= 8.1
 
 ## ダウンロード
 
