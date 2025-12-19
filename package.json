@@ -9,11 +9,10 @@
     "build:app": "node ./tools/build.js",
     "version:sync": "node ./tools/version.js",
     "release:commit": "node ./tools/commit.js",
-    "release:patch": "npm version patch --no-git-tag-version && npm run version:sync && npm run package && npm run release:commit",
-    "release:minor": "npm version minor --no-git-tag-version && npm run version:sync && npm run package && npm run release:commit",
-    "release:major": "npm version mejor --no-git-tag-version && npm run version:sync && npm run package && npm run release:commit",
-    "setup": "node ./tools/setup.js",
-    "prepare": "husky install"
+    "release:patch": "npm version patch --no-git-tag-version && npm run version:sync && npm run release:commit",
+    "release:minor": "npm version minor --no-git-tag-version && npm run version:sync && npm run release:commit",
+    "release:major": "npm version mejor --no-git-tag-version && npm run version:sync && npm run release:commit",
+    "setup": "node ./tools/setup.js"
   },
   "author": "uidev1116",
   "license": "MIT",
@@ -25,17 +24,9 @@
     "archiver": "^5.3.0",
     "co": "^4.6.0",
     "fs-extra": "^10.0.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.1.0",
     "node-cmd": "^4.0.0"
   },
-  "lint-staged": {
-    "*.php": [
-      "composer lint",
-      "composer format"
-    ]
-  },
   "volta": {
-    "node": "20.10.0"
+    "node": "24.12.0"
   }
 }

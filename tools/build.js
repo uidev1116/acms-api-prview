@@ -6,8 +6,6 @@ const fs = require('fs-extra');
 const co = require('co');
 const { zipPromise } = require('./lib/system.js');
 
-const { version } = require('../package.json');
-
 const srcDir = 'src'
 const zipDir = 'ApiPreview'
 
@@ -59,7 +57,6 @@ co(function* () {
     });
 
     yield zipPromise(zipDir, `./build/${zipDir}.zip`);
-    fs.copySync(`./build/${zipDir}.zip`, `./build/v${version}/${zipDir}.zip`);
   } catch (err) {
     console.log(err);
   } finally {
