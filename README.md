@@ -9,7 +9,7 @@ a-blog cms をヘッドレスCMSとして利用する場合にプレビュー機
 
 ## ダウンロード
 
-[ApiPreview](https://github.com/uidev1116/acms-api-preview/raw/master/build/ApiPreview.zip)
+[ApiPreview](https://github.com/uidev1116/acms-api-prview/releases/latest)
 
 ## インストール方法
 
